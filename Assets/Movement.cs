@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
 
     private bool isAttacking = false; // Track if the player is currently attacking
 
-    private float attackCooldown = 0.15f; // Cooldown time for attacks
+    private float attackCooldown = 0.85f; // Cooldown time for attacks
     public float attackEffectDuration = 0.6f; // Duration for attack effect (can be adjusted in inspector)
 
     [Header("Components")]
@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour
         {
             isAttacking = true;
             Attack();
-            attackCooldown = 0.5f;
+            attackCooldown = 0.85f;
             // Start coroutine to end attack after animation
             StartCoroutine(WaitForAttackEnd());
             // Start separate coroutine to hide attack effect after its duration
