@@ -22,6 +22,7 @@ public class Movement : MonoBehaviour
 
     public GameObject light;
     public GameObject attackEffect; // Attack effect sprite object
+    private AttackDamage attackDamageComponent; // Reference to attack damage component
 
     [Header("Input")]
     private Vector2 inputVector;
@@ -48,6 +49,14 @@ public class Movement : MonoBehaviour
         if (attackEffect != null)
         {
             attackEffect.SetActive(false);
+            
+            // Get the AttackDamage component from the attack effect
+            attackDamageComponent = attackEffect.GetComponent<AttackDamage>();
+            if (attackDamageComponent == null)
+            {
+                Debug.LogWarning("Attack effect doesn't have an AttackDamage component! Adding one automatically.");
+                attackDamageComponent = attackEffect.AddComponent<AttackDamage>();
+            }
         }
     }
 
@@ -175,11 +184,19 @@ public class Movement : MonoBehaviour
             animator.SetBool("Attack", true);
         }
         
-        // Show attack effect
+        // Show attack effect and activate damage
         if (attackEffect != null)
         {
             attackEffect.SetActive(true);
+            
+            // Activate the attack damage
+            if (attackDamageComponent != null)
+            {
+                attackDamageComponent.ActivateAttack();
+            }
         }
+        
+        Debug.Log("Player attack activated!");
     }
 
     void AttackEnd()
